@@ -35,14 +35,3 @@ cd Logistic-Regression-Model</code></pre>
 <h2>Dataset</h2>
 
 <p>The Iris dataset is loaded from a CSV file (<code>Iris.csv</code>). The script separates the data into training and testing sets, standardizes features, and then performs logistic regression to predict the iris species.</p>
-
-<h2>License</h2>
-
-<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
-
-<h2>Acknowledgments</h2>
-
-<ul>
-<li>The Iris dataset is widely used in machine learning and is credited to biologist and statistician Ronald A. Fisher.</li>
-<li>...</li>
-</ul>
