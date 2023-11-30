@@ -3,6 +3,8 @@ import random
 import numpy as np
 import argparse
 
+from logistic_prog import gradient_descent, predict
+
 def load_data():
     with open('Iris.csv', 'r') as iris:
         collumns = iris.readline()
@@ -37,27 +39,6 @@ def get_train_and_test_dataset(irises, species, percentage=0.8, random_seed=None
     test_species = encode_species_labels([species[i] for i in test_indexes])
 
     return train_data, train_species, test_data, test_species
-
-
-def sigmoid(z):
-    return 1 / (1 + np.exp(-z))
-
-def log_likelihood(X, y, theta):
-    m = len(y)
-    h = sigmoid(X @ theta)
-    return -(1/m) * np.sum(y * np.log(h) + (1 - y) * np.log(1 - h))
-
-def gradient_descent(X, y, theta, learning_rate, iterations):
-    m = len(y)
-    for _ in range(iterations):
-        h = sigmoid(X @ theta)
-        gradient = (1/m) * X.T @ (h - y)
-        theta -= learning_rate * gradient
-    return theta
-
-def predict(X, theta):
-    h = sigmoid(X @ theta)
-    return np.argmax(h, axis=1)
 
 def main(learning_rate_p, iterations_p, seed_p):
     irises, species = load_data()
