@@ -1,5 +1,3 @@
-<title>Logistic Regression with Gradient Descent</title>
-
 <h1>Logistic Regression with Gradient Descent</h1>
 
 <p>This script performs logistic regression using gradient descent on the Iris dataset. It predicts the species of iris flowers, considering three classes: Iris-setosa, Iris-versicolor, and Iris-virginica.</p>
