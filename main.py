@@ -1,6 +1,7 @@
 from Standizer import Standizer
 import random
 import numpy as np
+import argparse
 
 def load_data():
     with open('Iris.csv', 'r') as iris:
@@ -19,9 +20,12 @@ def encode_species_labels(species):
     label_dict = {'Iris-setosa': 0, 'Iris-versicolor': 1, 'Iris-virginica': 2}
     return [label_dict[s] for s in species]
 
-def get_train_and_test_dataset(irises, species, percentage=0.8):
+def get_train_and_test_dataset(irises, species, percentage=0.8, random_seed=None):
     length = len(irises)
     train_length = int(length * percentage)
+
+    if random_seed is not None:
+        random.seed(random_seed)
 
     train_indexes = random.sample(range(length), train_length)
     test_indexes = list(set(range(length)) - set(train_indexes))
@@ -33,6 +37,7 @@ def get_train_and_test_dataset(irises, species, percentage=0.8):
     test_species = encode_species_labels([species[i] for i in test_indexes])
 
     return train_data, train_species, test_data, test_species
+
 
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
@@ -54,10 +59,10 @@ def predict(X, theta):
     h = sigmoid(X @ theta)
     return np.argmax(h, axis=1)
 
-def main():
+def main(learning_rate_p, iterations_p, seed_p):
     irises, species = load_data()
         
-    Train_set, Train_species, Test_set, Test_species = get_train_and_test_dataset(irises, species)
+    Train_set, Train_species, Test_set, Test_species = get_train_and_test_dataset(irises, species, random_seed=seed_p)
     
     standizer = Standizer()
     Train_set = standizer.fit_transform(Train_set)
@@ -68,8 +73,8 @@ def main():
     
     theta = np.zeros((Train_set.shape[1], len(set(Train_species))))
 
-    learning_rate = 0.01
-    iterations = 10000
+    learning_rate = learning_rate_p
+    iterations = iterations_p
     
     for i in range(len(set(Train_species))):
         current_species_train = np.array([1 if x == i else 0 for x in Train_species])
@@ -84,4 +89,10 @@ def main():
     print("Accuracy:", accuracy)
         
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Logistic Regression with Gradient Descent')
+    parser.add_argument('--lr', type=float, default=0.01, help='Learning rate for gradient descent')
+    parser.add_argument('--it', type=int, default=1000, help='Number of iterations for gradient descent')
+    parser.add_argument('--sd', type=int, default=42, help='Random seed')
+
+    args = parser.parse_args()
+    main(args.lr, args.it, args.sd)
