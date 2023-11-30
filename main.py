@@ -92,7 +92,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Logistic Regression with Gradient Descent')
     parser.add_argument('--lr', type=float, default=0.01, help='Learning rate for gradient descent')
     parser.add_argument('--it', type=int, default=1000, help='Number of iterations for gradient descent')
-    parser.add_argument('--sd', type=int, default=42, help='Random seed')
+    parser.add_argument('--sd', type=int, default=random.randint(0,99999), help='Random seed')
 
     args = parser.parse_args()
     main(args.lr, args.it, args.sd)
