@@ -59,7 +59,6 @@ def main(learning_rate_p, iterations_p, seed_p):
     
     for i in range(len(set(Train_species))):
         current_species_train = np.array([1 if x == i else 0 for x in Train_species])
-        current_species_test = np.array([1 if x == i else 0 for x in Test_species])
         
         current_theta = gradient_descent(Train_set, current_species_train, theta[:, i], learning_rate, iterations)
         theta[:, i] = current_theta
